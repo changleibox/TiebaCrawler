@@ -12,6 +12,7 @@ from scrapy import Selector
 
 from tieba import utils
 from tieba.common.configs import *
+from tieba.items import TiebaItem
 from tieba.spiders.index_spiders import IndexSpider
 
 
@@ -83,6 +84,10 @@ class AutoSignSpider(IndexSpider):
                 forum['fid'] = tr.xpath('td[4]/span/@balvid').extract()[0]
                 forum['tbs'] = tr.xpath('td[4]/span/@tbs').extract()[0]
                 self.forums.append(forum)
+
+                item = TiebaItem()
+                item['forum'] = forum
+                yield item
             self.pn += 1
             yield self.__get_my_forums(pn=self.pn)
         else:

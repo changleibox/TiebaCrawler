@@ -5,6 +5,10 @@
 
 import pymysql
 
+from tieba.utils import Logger
+
+logger = Logger(__name__)
+
 
 def addslashes(s):
     if isinstance(type(s), unicode):
@@ -42,7 +46,7 @@ class Mysql(object):
 
     @classmethod
     def execute(cls, sql, is_dict=0):
-        print 'SQL=', sql
+        logger.info('SQL=' + sql)
         if is_dict:
             cls.cursor = cls.conn.cursor(pymysql.cursors.DictCursor)
         cls.cursor.execute(sql)
@@ -50,7 +54,7 @@ class Mysql(object):
 
     @classmethod
     def executemany(cls, sql, value, is_dict=0):
-        print 'SQL=', sql
+        logger.info('SQL=' + sql)
         if is_dict:
             cls.cursor = cls.conn.cursor(pymysql.cursors.DictCursor)
         cls.cursor.executemany(sql, value)
