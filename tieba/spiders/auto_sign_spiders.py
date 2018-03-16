@@ -85,7 +85,7 @@ class AutoSignSpider(IndexSpider):
                 forum['tbs'] = tr.xpath('td[4]/span/@tbs').extract()[0]
                 self.forums.append(forum)
 
-                item = TiebaItem()
+                item = TiebaItem(type=0)
                 item['forum'] = forum
                 yield item
             self.pn += 1

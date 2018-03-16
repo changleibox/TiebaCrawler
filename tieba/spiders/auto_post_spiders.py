@@ -8,6 +8,7 @@ import time
 
 from tieba import utils
 from tieba.common.configs import *
+from tieba.items import TiebaItem
 from tieba.post.post import InputPost
 from tieba.spiders.index_spiders import IndexSpider
 
@@ -54,6 +55,20 @@ class AutoPostSpider(IndexSpider):
             utils.debug('发帖成功：', json.dumps(json_obj['data']))
             tid = json_obj['data']['tid']
 
+            meta = response.meta['datas']
+
+            data = dict()
+            data['fid'] = meta['fid']
+            data['id'] = tid
+            data['kw'] = meta['kw']
+            data['tbs'] = meta['tbs']
+            data['title'] = meta['title']
+            data['content'] = meta['content']
+            data['timestamp'] = utils.timestamp
+            item = TiebaItem(type=1)
+            item['note'] = data
+            yield item
+
             time.sleep(2)
             yield self.post_reply(tid)
         else:
@@ -74,6 +89,19 @@ class AutoPostSpider(IndexSpider):
         tid = int(data_obj['tid']) if 'tid' in data_obj else 0
         if no == 0 and tid != 0:
             utils.debug('评论成功：', json.dumps(json_obj['data']))
+
+            meta = response.meta['datas']
+
+            data = dict()
+            data['fid'] = meta['fid']
+            data['kw'] = meta['kw']
+            data['tbs'] = meta['tbs']
+            data['tid'] = meta['tid']
+            data['content'] = meta['content']
+            data['timestamp'] = utils.timestamp
+            item = TiebaItem(type=2)
+            item['reply'] = data
+            yield item
 
             time.sleep(60)
             yield self.post_reply(tid)
@@ -151,7 +179,8 @@ class AutoPostSpider(IndexSpider):
             '__type__': 'thread',
             '_BSK': self.__get_bsk(tbs)
         }
-        return self._post(URL_BAIDU_INDEX + 'f/commit/thread/add', headers, datas, self.parse_post_note)
+        return self._post(URL_BAIDU_INDEX + 'f/commit/thread/add', headers, datas, self.parse_post_note,
+                          meta={'datas': datas})
 
     def __post_reply(self, tid, tbs, content, fid, kw, captcha=''):
         mouse_pwd_t, mouse_pwd = self.__get_mouse_pwd()
@@ -176,7 +205,8 @@ class AutoPostSpider(IndexSpider):
             '__type__': 'reply',
             '_BSK': self.__get_bsk(tbs)
         }
-        return self._post(URL_BAIDU_INDEX + 'f/commit/post/add', headers, datas, self.parse_post_reply)
+        return self._post(URL_BAIDU_INDEX + 'f/commit/post/add', headers, datas, self.parse_post_reply,
+                          meta={'datas': datas})
 
     @classmethod
     def __get_bsk(cls, tbs):

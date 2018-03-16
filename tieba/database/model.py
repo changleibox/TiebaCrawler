@@ -7,8 +7,16 @@ from tieba.utils.mysql import Mysql, Model
 
 
 class BaseModel(Model):
-    _conn = Mysql(user=DATABASE_USER_NAME, passwd=DATABASE_PASSWORD, db='TiebaCrawler')
+    _conn = Mysql(user=DATABASE_USER_NAME, passwd=DATABASE_PASSWORD, db='tieba_crawler')
 
 
 class Forum(BaseModel):
     _tbl = 'Forum'
+
+
+class Note(BaseModel):
+    _tbl = 'Note'
+
+
+class Reply(BaseModel):
+    _tbl = 'Reply'

@@ -12,3 +12,10 @@ class TiebaItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     forum = scrapy.Field()
+    note = scrapy.Field()
+    reply = scrapy.Field()
+    type = scrapy.Field()
+
+    def __init__(self, *args, **kwargs):
+        super(TiebaItem, self).__init__(*args, **kwargs)
+        self['type'] = kwargs['type']

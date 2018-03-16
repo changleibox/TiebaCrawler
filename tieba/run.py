@@ -26,8 +26,8 @@ if __name__ == '__main__':
     settings = get_project_settings()
     configure_logging(settings)
     runner = CrawlerRunner(settings)
-    runner.crawl(spiders.AutoSignSpider)
-    # runner.crawl(spiders.AutoPostSpider)
+    # runner.crawl(spiders.AutoSignSpider)
+    runner.crawl(spiders.AutoPostSpider)
 
     d = runner.join()
     # noinspection PyUnresolvedReferences
