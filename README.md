@@ -2,6 +2,9 @@
 实现百度贴吧的自动签到和自动发帖、自动回帖\
 实现Cookies免登录
 
+### Python版本
+Python2.7
+
 ### 实现方式
 主要是用了scrapy框架实现爬取，PIL实现现实验证码，运行前得先安装scrapy和PIL。\
 scrapy安装方式 [scrapy入门教程](http://scrapy-chs.readthedocs.io/zh_CN/0.24/intro/tutorial.html)\

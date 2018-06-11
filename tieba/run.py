@@ -22,11 +22,10 @@ def run_auto_post():
 
 
 if __name__ == '__main__':
-    # run_auto_sign()
     settings = get_project_settings()
     configure_logging(settings)
     runner = CrawlerRunner(settings)
-    # runner.crawl(spiders.AutoSignSpider)
+    runner.crawl(spiders.AutoSignSpider)
     runner.crawl(spiders.AutoPostSpider)
 
     d = runner.join()
