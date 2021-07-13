@@ -5,7 +5,7 @@
 import json
 import re
 import urllib
-import urlparse
+import urllib.parse
 from time import sleep
 
 from scrapy import Selector
@@ -51,8 +51,8 @@ class AutoSignSpider(IndexSpider):
         json_obj = json.loads(response.text)
         no = int(json_obj['no'])
         data = json_obj['data']
-        forum_name = urlparse.parse_qs(urllib.unquote(response.request.body))['kw'][0]
-        tbs = urlparse.parse_qs(urllib.unquote(response.request.body))['tbs'][0]
+        forum_name = urllib.parse.parse_qs(urllib.parse.unquote(response.request.body))['kw'][0]
+        tbs = urllib.parse.parse_qs(urllib.parse.unquote(response.request.body))['tbs'][0]
         if no == 0:
             utils.debug('签到成功：', forum_name)
         else:
@@ -61,7 +61,7 @@ class AutoSignSpider(IndexSpider):
         if no == 2150040:  # 此处为人机验证的验证码，没法整，先放着
             captcha_vcode_str = data['captcha_vcode_str']
             # captcha_vcode_type = data['captcha_code_type']
-            print captcha_vcode_str
+            print(captcha_vcode_str)
             input_captcha = '00010001000100000002000100020000'
             if input_captcha == '1':
                 yield self.__single_signin(tbs, forum_name)

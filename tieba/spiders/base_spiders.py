@@ -3,7 +3,8 @@
 
 # Created by box on 2018/3/2.
 import abc
-from urllib import urlencode
+from abc import ABC
+from urllib.parse import urlencode
 
 import scrapy
 from scrapy import Request, FormRequest
@@ -15,12 +16,12 @@ def _urlencode(seq, enc='utf-8'):
         values = [(to_bytes(k, enc), to_bytes(v, enc))
                   for k, vs in seq
                   for v in (vs if is_listlike(vs) else [vs])]
-        return urlencode(values, doseq=1)
+        return urlencode(values, doseq=True)
     else:
         return ''
 
 
-class BaseSpider(scrapy.Spider):
+class BaseSpider(scrapy.Spider, ABC):
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, name=None, **kwargs):

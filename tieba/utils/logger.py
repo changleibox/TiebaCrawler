@@ -110,4 +110,4 @@ class Logger(object):
 if __name__ == '__main__':
     for i in range(100):
         color = '033[%dm' % i
-        print '\033[%dm' % i, color, '颜色', color, '\033[0m'
+        print('\033[%dm' % i, color, '颜色', color, '\033[0m')

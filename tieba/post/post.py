@@ -153,12 +153,12 @@ class InputPost(BasePost):
         self.reply = None
 
     def get_note(self, captcha=''):
-        title = raw_input('请输入标题：')
-        return title, self.__convert_img(raw_input('请输入内容，图片用imgs=["...","...","..."]格式：'))
+        title = input('请输入标题：')
+        return title, self.__convert_img(input('请输入内容，图片用imgs=["...","...","..."]格式：'))
 
     def get_reply(self, tid, captcha=''):
         if self.reply is None:
-            self.reply = self.__convert_img(raw_input('请输入评论，图片用imgs=["...","...","..."]格式：'))
+            self.reply = self.__convert_img(input('请输入评论，图片用imgs=["...","...","..."]格式：'))
         return self.reply
 
     def __convert_img(self, content):
@@ -181,7 +181,7 @@ class LoginPost(object):
         if username:
             return username
         else:
-            username = raw_input('请输入账号：')
+            username = input('请输入账号：')
             utils.set_account(username=username)
         return username
 
@@ -191,6 +191,6 @@ class LoginPost(object):
         if username and password:
             return password
         else:
-            password = raw_input('请输入密码：')
+            password = input('请输入密码：')
             utils.set_account(password=password)
         return password

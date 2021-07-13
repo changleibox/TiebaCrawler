@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import cStringIO
 # Created by box on 2018/2/27.
 import hashlib
 import os
+import io
 
 import execjs
 import requests
@@ -42,10 +42,10 @@ def get_timestamp():
 
 
 def show_captcha(text):
-    img_file = cStringIO.StringIO(text)
+    img_file = io.StringIO(text)
     img_file.seek(0)
     Image.open(img_file).show()
-    return raw_input('请输入验证码，看不清按\'1\'：')
+    return input('请输入验证码，看不清按\'1\'：')
 
 
 def md5(text):
@@ -56,7 +56,7 @@ def md5(text):
 
 def get_img_size(url):
     try:
-        data_stream = cStringIO.StringIO(requests.get(url).content)
+        data_stream = io.StringIO(requests.get(url).content.decode())
         pil_image = Image.open(data_stream)
         return pil_image.size
     except IOError:
@@ -73,7 +73,7 @@ def del_file(path):
 
 
 if __name__ == '__main__':
-    print get_img_size('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec'
+    print(get_img_size('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec'
                        '=1520514352032&di=6c6c1814f318a15943154180a5f73474&imgtype=0&src=http%3A'
                        '%2F%2Fimg5.pcpop.com%2FArticleImages%2Ffnw%2F2016%2F1203%2F2ba3284b-2cf5'
-                       '-4cfb-b495-8c0cae5a432a.jpg')
+                       '-4cfb-b495-8c0cae5a432a.jpg'))

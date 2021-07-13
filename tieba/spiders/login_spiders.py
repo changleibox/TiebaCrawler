@@ -30,7 +30,7 @@ class LoginSpider(BaseSpider):
         self.__code_string = None
         self.__login_post = LoginPost()
 
-    def parse(self, response):
+    def parse(self, response, **kwargs):
         pass
 
     @abc.abstractmethod
